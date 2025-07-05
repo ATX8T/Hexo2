@@ -18,8 +18,9 @@ article: http://ogp.me/ns/article#">
 <meta property="og:author" content="John Doe">
 
   
-    <meta name="description" content="我的第二篇文章 || Hexo || ">
   
+  
+  <meta name="description" content="Hexo支持在一个站点中使用多个主题，但需要手动切换，无法同时运行多个主题。以下是几种实现方式：方法一：为不同分支使用不同主题创建主题分支：在项目根目录下，为每个主题创建独立的分支。例如：12gitcheckout-btheme-landscape#创建landscape主题分支gitcheckout-bth">
 
 
 <script src="/Hexo2/js/wang.js"></script>
@@ -207,13 +208,53 @@ article: http://ogp.me/ns/article#">
       
       
         <span class="post-updated">
-          Last Updated <time datetime="2025-07-05T08:41:32.187Z">2025-07-05</time>
+          Last Updated <time datetime="2025-07-05T08:44:27.798Z">2025-07-05</time>
         </span>
       
       <span style="margin-left:10px;">👁<span id="busuanzi_value_page_pv"></span></span>
     </div>
     <div class="post-content">
-      
+      <p>Hexo 支持在一个站点中使用多个主题，但需要手动切换，无法同时运行多个主题。以下是几种实现方式：</p>
+<h3 id="方法一：为不同分支使用不同主题"><a href="#方法一：为不同分支使用不同主题" class="headerlink" title="方法一：为不同分支使用不同主题"></a><strong>方法一：为不同分支使用不同主题</strong></h3><ol>
+<li><p><strong>创建主题分支</strong>：<br>在项目根目录下，为每个主题创建独立的分支。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b theme-landscape  <span class="comment"># 创建 landscape 主题分支</span></span><br><span class="line">git checkout -b theme-next      <span class="comment"># 创建 next 主题分支</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>在各分支中安装主题</strong>：<br>切换到对应分支后，安装并配置特定主题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout theme-landscape</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/hexojs/hexo-theme-landscape.git themes/landscape</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>生成与部署</strong>：<br>每次切换主题前，提交当前分支的更改，然后切换分支并重新生成静态文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout theme-next</span><br><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="方法二：使用多个配置文件"><a href="#方法二：使用多个配置文件" class="headerlink" title="方法二：使用多个配置文件"></a><strong>方法二：使用多个配置文件</strong></h3><ol>
+<li><p><strong>创建主题配置文件</strong>：<br>在项目根目录下创建多个配置文件，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_config.landscape.yml  <span class="comment"># landscape 主题配置</span></span><br><span class="line">_config.next.yml      <span class="comment"># next 主题配置</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>在配置文件中指定主题</strong>：<br>每个配置文件中设置不同的主题：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _config.landscape.yml</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">landscape</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>生成时指定配置文件</strong>：<br>使用 <code>-c</code> 参数指定配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate -c _config.yml,_config.landscape.yml</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="方法三：主题共存（手动切换）"><a href="#方法三：主题共存（手动切换）" class="headerlink" title="方法三：主题共存（手动切换）"></a><strong>方法三：主题共存（手动切换）</strong></h3><ol>
+<li><p><strong>将多个主题克隆到本地</strong>：<br>在 <code>themes</code> 目录下克隆多个主题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/hexojs/hexo-theme-landscape.git themes/landscape</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改主配置文件</strong>：<br>需要使用某个主题时，修改 <code>_config.yml</code> 中的 <code>theme</code> 字段：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span>  <span class="comment"># 切换到 next 主题</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>生成静态文件</strong>：<br>修改主题后重新生成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a><strong>注意事项</strong></h3><ol>
+<li><p><strong>主题配置冲突</strong>：<br>不同主题的配置项可能不同，切换主题时需确保 <code>_config.yml</code> 中的配置兼容。</p>
+</li>
+<li><p><strong>主题特定插件</strong>：<br>某些主题依赖特定插件（如 <code>hexo-generator-feed</code>），需确保所有主题所需插件均已安装。</p>
+</li>
+<li><p><strong>部署路径冲突</strong>：<br>若要同时部署多个主题的站点，需为每个主题配置不同的部署路径。</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>Hexo 可以通过分支、配置文件或手动切换的方式管理多个主题，但每次只能激活一个主题。这种方式适合在不同风格间切换，或为不同需求（如博客、文档）维护独立主题。</p>
+
     </div>
   </article>
   <div class="ccbyncsa">
@@ -335,7 +376,7 @@ article: http://ogp.me/ns/article#">
 
     </div>
     <div class="sidebar-bg">
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E4%B8%BA%E4%B8%8D%E5%90%8C%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%90%8C%E4%B8%BB%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">方法一：为不同分支使用不同主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">方法二：使用多个配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%9A%E4%B8%BB%E9%A2%98%E5%85%B1%E5%AD%98%EF%BC%88%E6%89%8B%E5%8A%A8%E5%88%87%E6%8D%A2%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">方法三：主题共存（手动切换）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
     <div class="sidebar-bg">
         <div class="card-tags">

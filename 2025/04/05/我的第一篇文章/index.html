@@ -18,8 +18,9 @@ article: http://ogp.me/ns/article#">
 <meta property="og:author" content="John Doe">
 
   
-    <meta name="description" content="我的第一篇文章 || Hexo || ">
   
+  
+  <meta name="description" content="在Hexo中，要将新编写的md文件分类到相应的导航栏菜单下，可根据不同菜单类型进行不同设置，以下是具体方法：分类（Categories）菜单：在新编写的md文件头部的Front-matter中，添加categories字段，并指定其值为相应的分类名称，如categories:技术。若主题支持多级分类，可使用c">
 
 
 <script src="/Hexo2/js/wang.js"></script>
@@ -207,13 +208,28 @@ article: http://ogp.me/ns/article#">
       
       
         <span class="post-updated">
-          Last Updated <time datetime="2025-07-05T08:40:59.409Z">2025-07-05</time>
+          Last Updated <time datetime="2025-07-05T08:43:21.061Z">2025-07-05</time>
         </span>
       
       <span style="margin-left:10px;">👁<span id="busuanzi_value_page_pv"></span></span>
     </div>
     <div class="post-content">
-      
+      <p>在Hexo中，要将新编写的md文件分类到相应的导航栏菜单下，可根据不同菜单类型进行不同设置，以下是具体方法：</p>
+<ul>
+<li><strong>分类（Categories）菜单</strong>：在新编写的md文件头部的Front - matter中，添加<code>categories</code>字段，并指定其值为相应的分类名称，如<code>categories: 技术</code>。若主题支持多级分类，可使用<code>categories: [大类, 小类]</code>的形式。例如：</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">文章标题</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-07-05</span></span><br><span class="line"><span class="attr">categories:</span> <span class="string">编程技术</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>标签（Tags）菜单</strong>：同样在md文件头部的Front - matter中，添加<code>tags</code>字段，后面跟上标签内容。可以是单个标签，也可以是多个标签，多个标签用逗号分隔，如<code>tags: (编程, 感悟)</code>。示例如下：</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">我的文章</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-07-05</span></span><br><span class="line"><span class="attr">tags:</span> <span class="string">经验分享,</span> <span class="string">Hexo</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>归档（Archives）菜单</strong>：Hexo通常会自动根据文章的发布时间将其归类到归档页面，无需在md文件中进行额外设置。只要文章设置了正确的<code>date</code>字段，生成静态页面后，就会出现在归档页面中。</li>
+<li><strong>关于（About）菜单</strong>：“关于”页面一般是一个固定的介绍页面，通常不需要将其他文章归类到这里。若有特殊需求，可在主题配置文件中修改“关于”菜单的链接，指向包含相关内容的md文件生成的页面。不过一般建议“关于”页面保持独立，不用于分类其他文章。</li>
+<li><strong>其他自定义菜单（如Travelling）</strong>：如果想将文章归类到自定义菜单下，如上述的“Travelling”菜单，首先需要确认该菜单对应的页面功能。若只是一个链接，通常不用于分类文章。若希望其展示相关文章，可参考分类菜单的方式，在主题配置文件中找到该菜单的配置项，修改其链接指向一个分类页面或自定义页面，然后在文章Front - matter中添加与该页面相关的分类或标签等标识。</li>
+</ul>
+<p>完成上述设置后，使用<code>hexo g</code>命令生成静态页面，再通过<code>hexo s</code>命令启动本地服务器，即可在本地查看分类效果。若要部署到线上，使用<code>hexo d</code>命令进行部署。</p>
+
     </div>
   </article>
   <div class="ccbyncsa">
